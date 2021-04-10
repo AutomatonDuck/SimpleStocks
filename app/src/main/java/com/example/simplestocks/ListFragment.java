@@ -26,9 +26,16 @@ import org.json.JSONObject;
 
 
 public class ListFragment extends Fragment {
+    String stock;
+    String name;
+    String currency;
 
     @Nullable
     @Override
+
+
+
+
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         String url = "https://api.polygon.io/v2/reference/tickers?sort=ticker&perpage=50&page=1&apiKey=p43H0UpbcDsGNvlzCI62sVnwoapw4su_";
 
@@ -47,6 +54,16 @@ public class ListFragment extends Fragment {
                             JSONObject jordan = new JSONObject(response);
                             //System.out.println(jordan);
                             JSONArray tickers = jordan.getJSONArray("tickers");
+
+                            for(int i = 0; i < 50; i++)
+                            {
+                                JSONObject parse = tickers.getJSONObject(i);
+                                stock = parse.getString("tikcer");
+                                name = parse.getString("name");
+                                currency = parse.getString("currency");
+
+
+                            }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
