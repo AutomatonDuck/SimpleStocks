@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,6 +26,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 
 public class ListFragment extends Fragment {
     String stock;
@@ -38,7 +42,8 @@ public class ListFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         String url = "https://api.polygon.io/v2/reference/tickers?sort=ticker&perpage=50&page=1&apiKey=p43H0UpbcDsGNvlzCI62sVnwoapw4su_";
-
+        View view = inflater.inflate(R.layout.fragment_list,container,false);
+        ListView listView = (ListView) view.findViewById(R.id.ticker_list);
 
             RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
 
@@ -54,16 +59,22 @@ public class ListFragment extends Fragment {
                             JSONObject jordan = new JSONObject(response);
                             //System.out.println(jordan);
                             JSONArray tickers = jordan.getJSONArray("tickers");
-
+                            ArrayList stockList = new ArrayList(tickers.length());
                             for(int i = 0; i < 50; i++)
                             {
                                 JSONObject parse = tickers.getJSONObject(i);
-                                stock = parse.getString("tikcer");
+                                stock = parse.getString("ticker");
                                 name = parse.getString("name");
                                 currency = parse.getString("currency");
-
+                                ArrayList<String> sList = new ArrayList<>();
+                                sList.add(0,name);
+                                sList.add(1,stock);
+                                //sList.add(3,currency);
+                                stockList.add(sList);
 
                             }
+                            ArrayAdapter<String> listViewAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, stockList);
+                            listView.setAdapter(listViewAdapter);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -82,7 +93,7 @@ public class ListFragment extends Fragment {
 
 
 
-        return inflater.inflate(R.layout.fragment_list,container,false);
+        return view;
 
     }
 
