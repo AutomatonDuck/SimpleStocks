@@ -67,9 +67,9 @@ public class ListFragment extends Fragment {
                                 name = parse.getString("name");
                                 currency = parse.getString("currency");
                                 ArrayList<String> sList = new ArrayList<>();
-                                sList.add(0,name);
-                                sList.add(1,stock);
-                                //sList.add(3,currency);
+                                //sList.add(0,name);
+                                sList.add(0,stock);
+                                sList.add(1,currency);
                                 stockList.add(sList);
 
                             }

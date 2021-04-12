@@ -10,10 +10,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 public class LoginFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_login,container,false);
+
+        View view = inflater.inflate(R.layout.fragment_login,container,false);
+        //hide navbar
+        //BottomNavigationView bottomNav = getActivity().findViewById(R.id.bottom_navigation);
+        //bottomNav.setVisibility(View.GONE);
+
+
+        return view;
     }
 }
