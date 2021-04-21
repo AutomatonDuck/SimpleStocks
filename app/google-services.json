@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "971718840485",
+    "firebase_url": "https://simplestocks-658a2-default-rtdb.firebaseio.com",
+    "project_id": "simplestocks-658a2",
+    "storage_bucket": "simplestocks-658a2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:971718840485:android:a07d8ee13d6a45f15cfd4c",
+        "android_client_info": {
+          "package_name": "com.example.simplestocks"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "971718840485-rc48g5s8oiho3eg35egqjeq3dm7drffd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD92ApnlMa2RnVDVO9EYfl_RNaTZWLk6Oo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "971718840485-rc48g5s8oiho3eg35egqjeq3dm7drffd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
