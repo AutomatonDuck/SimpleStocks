@@ -41,7 +41,7 @@ public class ListFragment extends Fragment {
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        String url = "https://api.polygon.io/v2/reference/tickers?sort=ticker&perpage=50&page=1&apiKey=p43H0UpbcDsGNvlzCI62sVnwoapw4su_";
+        String url = "https://api.polygon.io/v2/reference/tickers?sort=ticker&perpage=50&page=1&apiKey=p43H0UpbcDsGNvlzCI62sVnwoapw4su_"; //need to modify for resuability
         View view = inflater.inflate(R.layout.fragment_list,container,false);
         ListView listView = (ListView) view.findViewById(R.id.ticker_list);
 
@@ -60,16 +60,16 @@ public class ListFragment extends Fragment {
                             //System.out.println(jordan);
                             JSONArray tickers = jordan.getJSONArray("tickers");
                             ArrayList stockList = new ArrayList(tickers.length());
-                            for(int i = 0; i < 50; i++)
+                            for(int i = 0; i < tickers.length(); i++)
                             {
                                 JSONObject parse = tickers.getJSONObject(i);
                                 stock = parse.getString("ticker");
                                 name = parse.getString("name");
                                 currency = parse.getString("currency");
-                                ArrayList<String> sList = new ArrayList<>();
-                                //sList.add(0,name);
-                                sList.add(0,stock);
-                                sList.add(1,currency);
+                                ArrayList<String> sList = new ArrayList<>(); // need to figure out how to get more then 2 elements in the array
+                                sList.add(0,name);
+                                sList.add(1,stock);
+                                //sList.add(2,currency);
                                 stockList.add(sList);
 
                             }
