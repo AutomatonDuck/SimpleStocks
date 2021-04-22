@@ -41,7 +41,7 @@ public class LoginFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         Button signinBT = view.findViewById(R.id.signInButton);
         Button newuser = view.findViewById(R.id.newUserButton);
-        onStart();
+       // onStart();
 
         signinBT.setOnClickListener(v -> signin(view));
         newuser.setOnClickListener(v -> createAccount(view));
@@ -108,5 +108,7 @@ public class LoginFragment extends Fragment {
 
     private void reload(){}
 
-    private void updateUI(FirebaseUser user){}
+    private void updateUI(FirebaseUser user){
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment(), "Find this fragment").addToBackStack(null).commit();
+    }
 }
