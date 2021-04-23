@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">SimpleStocks</string>
     <string name="FirebaseAPIKey"> AIzaSyC1XVIPnj-Bo2VYSQ-UxyyDLBcADCKqqOM </string>
+    <string name="APIKey">p43H0UpbcDsGNvlzCI62sVnwoapw4su_</string>
 </resources>

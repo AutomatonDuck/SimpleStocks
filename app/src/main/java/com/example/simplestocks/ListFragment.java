@@ -45,7 +45,7 @@ public class ListFragment extends Fragment {
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        String url = "https://api.polygon.io/v2/reference/tickers?sort=ticker&perpage=50&page=1&apiKey=p43H0UpbcDsGNvlzCI62sVnwoapw4su_"; //need to modify for resuability
+        String url = "https://api.polygon.io/v2/reference/tickers?sort=ticker&perpage=50&page=1&apiKey=" + getString(R.string.APIKey);
         View view = inflater.inflate(R.layout.fragment_list,container,false);
         ListView listView = (ListView) view.findViewById(R.id.ticker_list);
 

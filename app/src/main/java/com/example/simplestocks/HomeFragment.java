@@ -19,19 +19,20 @@ public class HomeFragment extends Fragment {
     @Override
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Bundle intent = this.getArguments();
-        if(intent != null){
-            stock = (String) intent.getSerializable("stock");
-            currency = (String) intent.getSerializable("currency");
-        }
+
 
         View view = inflater.inflate(R.layout.fragment_home,container,false);
         BottomNavigationView bottomNav = getActivity().findViewById(R.id.bottom_navigation);
         bottomNav.setVisibility(View.VISIBLE);
 
+        Bundle intent = this.getArguments();
+        if(intent != null){
+            stock = (String) intent.getSerializable("stock");
+            currency = (String) intent.getSerializable("currency");
+            System.out.println(stock);
+        }
 
 
-        System.out.println(stock);
 
         return view;
     }
