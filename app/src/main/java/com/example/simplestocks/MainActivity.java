@@ -3,6 +3,8 @@ package com.example.simplestocks;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
@@ -44,7 +47,8 @@ public class MainActivity extends AppCompatActivity {
 
                     switch ((item.getItemId())) {
                         case R.id.nav_home:
-                            selectedFragment = new HomeFragment();
+
+                            selectedFragment =  new HomeFragment();
                             break;
                         case R.id.nav_ticker:
 
@@ -53,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
                         case R.id.nav_news:
                             selectedFragment = new NewsFragment();
                             break;
+                        case R.id.Logout:
+                            selectedFragment = new LoginFragment();
                     }
 
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
@@ -62,5 +68,6 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             };
+
 
 }

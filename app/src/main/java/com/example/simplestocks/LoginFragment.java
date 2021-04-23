@@ -46,8 +46,8 @@ public class LoginFragment extends Fragment {
         signinBT.setOnClickListener(v -> signin(view));
         newuser.setOnClickListener(v -> createAccount(view));
         //hide navbar
-        //BottomNavigationView bottomNav = getActivity().findViewById(R.id.bottom_navigation);
-        //bottomNav.setVisibility(View.GONE);
+        BottomNavigationView bottomNav = getActivity().findViewById(R.id.bottom_navigation);
+        bottomNav.setVisibility(View.GONE);
 
 
 

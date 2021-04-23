@@ -10,10 +10,29 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 public class HomeFragment extends Fragment {
+    String stock;
+    String currency;
     @Nullable
     @Override
+
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_home,container,false);
+        Bundle intent = this.getArguments();
+        if(intent != null){
+            stock = (String) intent.getSerializable("stock");
+            currency = (String) intent.getSerializable("currency");
+        }
+
+        View view = inflater.inflate(R.layout.fragment_home,container,false);
+        BottomNavigationView bottomNav = getActivity().findViewById(R.id.bottom_navigation);
+        bottomNav.setVisibility(View.VISIBLE);
+
+
+
+        System.out.println(stock);
+
+        return view;
     }
 }

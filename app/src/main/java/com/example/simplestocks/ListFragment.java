@@ -2,10 +2,12 @@ package com.example.simplestocks;
 
 
 import android.app.Application;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -33,6 +35,8 @@ public class ListFragment extends Fragment {
     String stock;
     String name;
     String currency;
+    View fav;
+
 
     @Nullable
     @Override
@@ -67,14 +71,24 @@ public class ListFragment extends Fragment {
                                 name = parse.getString("name");
                                 currency = parse.getString("currency");
                                 ArrayList<String> sList = new ArrayList<>(); // need to figure out how to get more then 2 elements in the array
-                                sList.add(0,name);
-                                sList.add(1,stock);
-                                //sList.add(2,currency);
+                                //sList.add(0,name);
+                                sList.add(0,stock);
+                                sList.add(1,currency);
                                 stockList.add(sList);
+                                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                        setFav(fav, stock, currency);
+                                        System.out.println("Click detected");
+                                    }
+                                });
+
 
                             }
                             ArrayAdapter<String> listViewAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, stockList);
                             listView.setAdapter(listViewAdapter);
+
+
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -96,6 +110,12 @@ public class ListFragment extends Fragment {
         return view;
 
     }
+    public void setFav(View v, String ticker, String currency){
+        HomeFragment fragment = new HomeFragment();
+        Bundle intent = new Bundle();
+        intent.putSerializable("ticker",ticker);
+        intent.putSerializable("currency",currency);
+        fragment.setArguments(intent);
 
-
+    }
 }
