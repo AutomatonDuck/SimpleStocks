@@ -36,7 +36,7 @@ public class ListFragment extends Fragment {
     String name;
     String currency;
     View fav;
-
+    ListView listView;
 
     @Nullable
     @Override
@@ -45,66 +45,8 @@ public class ListFragment extends Fragment {
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        String url = "https://api.polygon.io/v2/reference/tickers?sort=ticker&perpage=50&page=1&apiKey=" + getString(R.string.APIKey);
         View view = inflater.inflate(R.layout.fragment_list,container,false);
-        ListView listView = (ListView) view.findViewById(R.id.ticker_list);
-
-            RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
-
-
-
-            StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                    url,
-                    response -> {
-
-
-                        //System.out.println(response);
-                        try {
-                            JSONObject jordan = new JSONObject(response);
-                            //System.out.println(jordan);
-                            JSONArray tickers = jordan.getJSONArray("tickers");
-                            ArrayList stockList = new ArrayList(tickers.length());
-                            for(int i = 0; i < tickers.length(); i++)
-                            {
-                                JSONObject parse = tickers.getJSONObject(i);
-                                stock = parse.getString("ticker");
-                                name = parse.getString("name");
-                                currency = parse.getString("currency");
-                                ArrayList<String> sList = new ArrayList<>(); // need to figure out how to get more then 2 elements in the array
-                                //sList.add(0,name);
-                                sList.add(0,stock);
-                                sList.add(1,currency);
-                                stockList.add(sList);
-                                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                    @Override
-                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                        setFav(fav, stock, currency);
-                                        System.out.println("Click detected");
-                                    }
-                                });
-
-
-                            }
-                            ArrayAdapter<String> listViewAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, stockList);
-                            listView.setAdapter(listViewAdapter);
-
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-
-
-
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-
-                }
-            });
-            queue.add(stringRequest);
-
+        listView = (ListView) view.findViewById(R.id.ticker_list);
 
 
         return view;
@@ -116,6 +58,73 @@ public class ListFragment extends Fragment {
         intent.putSerializable("ticker",ticker);
         intent.putSerializable("currency",currency);
         fragment.setArguments(intent);
+
+    }
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        String url = "https://api.polygon.io/v2/reference/tickers?sort=ticker&perpage=50&page=1&apiKey=" + getString(R.string.APIKey);
+
+
+
+        RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,
+                url,
+                response -> {
+
+
+                    //System.out.println(response);
+                    try {
+                        JSONObject jordan = new JSONObject(response);
+                        //System.out.println(jordan);
+                        JSONArray tickers = jordan.getJSONArray("tickers");
+                        ArrayList stockList = new ArrayList(tickers.length());
+                        for(int i = 0; i < tickers.length(); i++)
+                        {
+                            JSONObject parse = tickers.getJSONObject(i);
+                            stock = parse.getString("ticker");
+                            name = parse.getString("name");
+                            currency = parse.getString("currency");
+                            ArrayList<String> sList = new ArrayList<>(); // need to figure out how to get more then 2 elements in the array
+                            //sList.add(0,name);
+                            sList.add(0,stock);
+                            sList.add(1,currency);
+                            stockList.add(sList);
+                            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    setFav(fav, stock, currency);
+                                    System.out.println("Click detected");
+                                }
+                            });
+
+
+                        }
+                        ArrayAdapter<String> listViewAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, stockList);
+                        listView.setAdapter(listViewAdapter);
+
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+
+
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        queue.add(stringRequest);
+
+
+
 
     }
 }

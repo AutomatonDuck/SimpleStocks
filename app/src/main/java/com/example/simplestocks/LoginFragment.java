@@ -15,6 +15,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -23,13 +25,17 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import java.util.concurrent.Executor;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import static android.content.ContentValues.TAG;
 
+
 public class LoginFragment extends Fragment {
     private FirebaseAuth mAuth;
+    FirebaseDatabase db = FirebaseDatabase.getInstance();
+    DatabaseReference userRef = db.getReference("user");
+
     @Nullable
     @Override
 
@@ -39,6 +45,7 @@ public class LoginFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_login,container,false);
         FirebaseApp.initializeApp(getContext());
         mAuth = FirebaseAuth.getInstance();
+
         Button signinBT = view.findViewById(R.id.signInButton);
         Button newuser = view.findViewById(R.id.newUserButton);
        // onStart();
@@ -75,6 +82,8 @@ public class LoginFragment extends Fragment {
                         if(task.isSuccessful()){
                             Log.d(TAG, "CreateUserWithEmail:Success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            String userId = user.getUid(); // get unique hash for user
+                            writeNewUser(userId,email, password);
                             updateUI(user);
                         }else{
                             Log.d(TAG, "CreateUserWithEmail:Failure", task.getException());
@@ -109,6 +118,14 @@ public class LoginFragment extends Fragment {
     private void reload(){}
 
     private void updateUI(FirebaseUser user){
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment(), "Find this fragment").addToBackStack(null).commit();
+        if(user != null) {
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment(), "Find this fragment").addToBackStack(null).commit();
+        }
     }
+
+    public void writeNewUser(String userId, String email, String password){
+        User user = new User(email, password);
+        userRef.child("user").child(userId).setValue(user);
+    }
+
 }

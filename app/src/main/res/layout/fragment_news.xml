@@ -26,13 +26,13 @@
 
     <EditText
         android:id="@+id/tickerSearch"
-        android:layout_width="311dp"
-        android:layout_height="48dp"
+        android:layout_width="315dp"
+        android:layout_height="45dp"
         android:ems="10"
-        android:hint="Enter ticker"
+        android:inputType="text"
         app:layout_constraintBottom_toTopOf="@+id/newslist"
         app:layout_constraintEnd_toStartOf="@+id/search"
-        app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

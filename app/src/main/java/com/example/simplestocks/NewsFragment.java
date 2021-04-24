@@ -33,7 +33,7 @@ public class NewsFragment extends Fragment {
     String currency;
     ListView news;
     RequestQueue queue;
-
+    EditText tickerST;
     //String key = getString(R.string.APIKey);
     @Nullable
     @Override
@@ -42,6 +42,7 @@ public class NewsFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_news,container,false);
         Button search = v.findViewById(R.id.search);
         news =  v.findViewById(R.id.newslist);
+        tickerST = (EditText) v.findViewById(R.id.tickerSearch);
         queue = Volley.newRequestQueue(getActivity().getApplicationContext());
         search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,7 +59,7 @@ public class NewsFragment extends Fragment {
     }
 
     public void getNews(View view){
-        EditText tickerST = (EditText) view.findViewById(R.id.tickerSearch);
+
         String tickerName = "AAPL";
         if(tickerST != null) {
             tickerName = tickerST.getText().toString();
@@ -71,7 +72,7 @@ public class NewsFragment extends Fragment {
                 response -> {
 
 
-                    System.out.println(response);
+                    //System.out.println(response);
                     try {
                         JSONArray jordan = new JSONArray(response);
                         //System.out.println(jordan);
@@ -90,7 +91,7 @@ public class NewsFragment extends Fragment {
                             sList.add(1,currency);
                             stockList.add(sList);
 
-                            System.out.println(stock);
+                            //System.out.println(stock);
                             /*listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
