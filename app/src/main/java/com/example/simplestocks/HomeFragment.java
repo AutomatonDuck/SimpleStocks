@@ -38,7 +38,7 @@ public class HomeFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Bundle intent = this.getArguments();
         if(intent != null){
-            stock = (String) intent.getSerializable("stock");
+            stock = (String) intent.getSerializable("ticker");
             currency = (String) intent.getSerializable("currency");
 
         }

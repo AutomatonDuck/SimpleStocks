@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -37,6 +39,8 @@ public class ListFragment extends Fragment {
     String currency;
     View fav;
     ListView listView;
+    EditText symbolST;
+    Button symbolBT;
 
     @Nullable
     @Override
@@ -47,6 +51,14 @@ public class ListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list,container,false);
         listView = (ListView) view.findViewById(R.id.ticker_list);
+        symbolST = view.findViewById(R.id.stocksearch);
+        symbolBT = view.findViewById(R.id.getStockBT);
+        symbolBT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getStock(v);
+            }
+        });
 
 
         return view;
@@ -63,7 +75,18 @@ public class ListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        String url = "https://api.polygon.io/v2/reference/tickers?sort=ticker&perpage=50&page=1&apiKey=" + getString(R.string.APIKey);
+
+
+
+
+    }
+
+    public void getStock(View view){
+        String tick = "AAPL";
+       if(symbolST != null) {
+          tick = symbolST.getText().toString();
+        }
+        String url = "https://api.polygon.io/vX/reference/tickers?ticker="+tick+"&type=CS&market=stocks&active=true&sort=ticker&order=asc&limit=10&apiKey=" + getString(R.string.APIKey);
 
 
 
@@ -80,14 +103,14 @@ public class ListFragment extends Fragment {
                     try {
                         JSONObject jordan = new JSONObject(response);
                         //System.out.println(jordan);
-                        JSONArray tickers = jordan.getJSONArray("tickers");
+                        JSONArray tickers = jordan.getJSONArray("results");
                         ArrayList stockList = new ArrayList(tickers.length());
                         for(int i = 0; i < tickers.length(); i++)
                         {
                             JSONObject parse = tickers.getJSONObject(i);
                             stock = parse.getString("ticker");
                             name = parse.getString("name");
-                            currency = parse.getString("currency");
+                            currency = parse.getString("currency_name");
                             ArrayList<String> sList = new ArrayList<>(); // need to figure out how to get more then 2 elements in the array
                             //sList.add(0,name);
                             sList.add(0,stock);
@@ -122,9 +145,6 @@ public class ListFragment extends Fragment {
             }
         });
         queue.add(stringRequest);
-
-
-
 
     }
 }
