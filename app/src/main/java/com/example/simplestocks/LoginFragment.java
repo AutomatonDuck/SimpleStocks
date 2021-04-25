@@ -50,7 +50,9 @@ public class LoginFragment extends Fragment {
         Button newuser = view.findViewById(R.id.newUserButton);
        // onStart();
 
-        signinBT.setOnClickListener(v -> signin(view));
+        signinBT.setOnClickListener(v -> {
+            signin(view);
+        });
         newuser.setOnClickListener(v -> createAccount(view));
         //hide navbar
         BottomNavigationView bottomNav = getActivity().findViewById(R.id.bottom_navigation);
@@ -71,51 +73,71 @@ public class LoginFragment extends Fragment {
         }
     }
     public void createAccount(View view){
-        EditText emailST = (EditText) view.findViewById(R.id.userID);
-        EditText passwordST = (EditText) view.findViewById(R.id.userPassword);
-        String email = emailST.getText().toString();
-        String password = passwordST.getText().toString();
-        mAuth.createUserWithEmailAndPassword(email,password)
-                .addOnCompleteListener((Activity) getContext(), new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            Log.d(TAG, "CreateUserWithEmail:Success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            String userId = user.getUid(); // get unique hash for user
-                            writeNewUser(userId,email, password);
-                            updateUI(user);
-                        }else{
-                            Log.d(TAG, "CreateUserWithEmail:Failure", task.getException());
-                            //Toast.makeText(LoginFragment.this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
-                            updateUI(null);
+        try {
+
+
+            EditText emailST = (EditText) view.findViewById(R.id.userID);
+            EditText passwordST = (EditText) view.findViewById(R.id.userPassword);
+
+
+            String email = emailST.getText().toString();
+            String password = passwordST.getText().toString();
+            mAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener((Activity) getContext(), new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                Log.d(TAG, "CreateUserWithEmail:Success");
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                String userId = user.getUid(); // get unique hash for user
+                                writeNewUser(userId, email, password);
+                                updateUI(user);
+                            } else {
+                                Log.d(TAG, "CreateUserWithEmail:Failure", task.getException());
+                                //Toast.makeText(LoginFragment.this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
+                                updateUI(null);
+                            }
                         }
-                    }
-                });
+                    });
+        } catch (Exception e){
+            Toast.makeText(getContext(), "Enter new username and password",Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void signin(View view){
-        EditText emailST = (EditText) view.findViewById(R.id.userID);
-        EditText passwordST = (EditText) view.findViewById(R.id.userPassword);
-        String email = emailST.getText().toString();
-        String password = passwordST.getText().toString();
-        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener((Activity) getContext(), new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    Log.d(TAG, "SignIn: Successful");
-                    FirebaseUser user = mAuth.getCurrentUser();
-                    updateUI(user);
-                } else {
-                    Log.d(TAG, "LoginUserWithEmail:Failure", task.getException());
-                    //Toast.makeText(LoginFragment.this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
-                    updateUI(null);
-                }
+        try {
+
+
+            EditText emailST = (EditText) view.findViewById(R.id.userID);
+            EditText passwordST = (EditText) view.findViewById(R.id.userPassword);
+            if (emailST == null || passwordST == null) {
+                Toast.makeText(getContext(), "Enter username and password", Toast.LENGTH_SHORT).show();
+                return;
             }
-        });
+            String email = emailST.getText().toString();
+            String password = passwordST.getText().toString();
+            mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener((Activity) getContext(), new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        Log.d(TAG, "SignIn: Successful");
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        updateUI(user);
+                    } else {
+                        Log.d(TAG, "LoginUserWithEmail:Failure", task.getException());
+                        //Toast.makeText(LoginFragment.this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
+                        updateUI(null);
+                    }
+                }
+            });
+        }catch (Exception e){
+            Toast.makeText(getContext(), "Enter username and password",Toast.LENGTH_SHORT).show();
+        }
     }
 
-    private void reload(){}
+    private void reload(){
+       // getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new LoginFragment()).commit();
+    }
 
     private void updateUI(FirebaseUser user){
         if(user != null) {
