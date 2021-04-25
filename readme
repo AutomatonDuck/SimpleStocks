@@ -1,0 +1,4 @@
+New user is created by entering a email address and a 8+ charachter password and pressing the new user button
+Stock search is done by entering symbol into text field in all Caps, otherwise 10 stocks starting from A with be shwon
+News search is done by entering symbol into text field in all Caps. Will return 15 news articles in a text format
+As of right now, no data other then login info is saved
