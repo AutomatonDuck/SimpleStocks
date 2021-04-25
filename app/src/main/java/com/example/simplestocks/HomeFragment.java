@@ -24,6 +24,7 @@ public class HomeFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_home,container,false);
         BottomNavigationView bottomNav = getActivity().findViewById(R.id.bottom_navigation);
+        //this is needed as the navbar state is carried over from the login fragment
         bottomNav.setVisibility(View.VISIBLE);
 
 
@@ -36,6 +37,8 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        //an attempt to receivce data in an intent sent from the list fragment
+        //did not work as the fragments are recreated and destoryed each time
         Bundle intent = this.getArguments();
         if(intent != null){
             stock = (String) intent.getSerializable("ticker");

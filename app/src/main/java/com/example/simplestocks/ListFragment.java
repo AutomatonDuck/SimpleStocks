@@ -64,6 +64,7 @@ public class ListFragment extends Fragment {
         return view;
 
     }
+    // an attempt to move data from this fragment to home fragment
     public void setFav(View v, String ticker, String currency){
         HomeFragment fragment = new HomeFragment();
         Bundle intent = new Bundle();
@@ -80,7 +81,7 @@ public class ListFragment extends Fragment {
 
 
     }
-
+//get response, linked to button listener
     public void getStock(View view){
         String tick = "AAPL";
        if(symbolST != null) {

@@ -65,6 +65,7 @@ public class LoginFragment extends Fragment {
     }
 
     @Override
+    // used for persistant login, not implemented yet
     public void onStart(){
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -94,7 +95,7 @@ public class LoginFragment extends Fragment {
                                 updateUI(user);
                             } else {
                                 Log.d(TAG, "CreateUserWithEmail:Failure", task.getException());
-                                //Toast.makeText(LoginFragment.this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "Authentication Failed.", Toast.LENGTH_SHORT).show();
                                 updateUI(null);
                             }
                         }
@@ -125,7 +126,7 @@ public class LoginFragment extends Fragment {
                         updateUI(user);
                     } else {
                         Log.d(TAG, "LoginUserWithEmail:Failure", task.getException());
-                        //Toast.makeText(LoginFragment.this, "Authentication Failed.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Authentication Failed.", Toast.LENGTH_SHORT).show();
                         updateUI(null);
                     }
                 }
@@ -135,16 +136,19 @@ public class LoginFragment extends Fragment {
         }
     }
 
+    //would be used to reload loginfragment if onStart() showed NULL
     private void reload(){
        // getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new LoginFragment()).commit();
     }
 
+    //Transfers user to home fragment if login or user creation in successful
     private void updateUI(FirebaseUser user){
         if(user != null) {
             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment(), "Find this fragment").addToBackStack(null).commit();
         }
     }
 
+    //creates new user and upload to Firebase database
     public void writeNewUser(String userId, String email, String password){
         User user = new User(email, password);
         userRef.child("user").child(userId).setValue(user);

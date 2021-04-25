@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+//Navigation bar Listener
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener(){
 

@@ -34,7 +34,7 @@ public class NewsFragment extends Fragment {
     ListView news;
     RequestQueue queue;
     EditText tickerST;
-    //String key = getString(R.string.APIKey);
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -59,7 +59,8 @@ public class NewsFragment extends Fragment {
     }
 
     public void getNews(View view){
-
+        //left to prevent need for error checking
+        //would like it to be random
         String tickerName = "AAPL";
         if(tickerST != null) {
             tickerName = tickerST.getText().toString();
@@ -92,6 +93,7 @@ public class NewsFragment extends Fragment {
                             stockList.add(sList);
 
                             //System.out.println(stock);
+                            //On click listener left here for use so each article would go to response URL
                             /*listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
