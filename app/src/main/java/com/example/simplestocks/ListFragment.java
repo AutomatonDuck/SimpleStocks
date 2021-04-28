@@ -24,6 +24,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
@@ -41,7 +45,11 @@ public class ListFragment extends Fragment {
     ListView listView;
     EditText symbolST;
     Button symbolBT;
-
+    String uname;
+    String uid;
+    FirebaseDatabase db = FirebaseDatabase.getInstance();
+    DatabaseReference userRef = db.getReference("user");
+    DatabaseReference favRef = db.getReference("favorites");
     @Nullable
     @Override
 
@@ -50,6 +58,15 @@ public class ListFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list,container,false);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user!=null) {
+            uname = user.getEmail();
+            uid = user.getUid();
+           // System.out.println(uname);
+
+        }
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
+        DatabaseReference userRef = db.getReference("user");
         listView = (ListView) view.findViewById(R.id.ticker_list);
         symbolST = view.findViewById(R.id.stocksearch);
         symbolBT = view.findViewById(R.id.getStockBT);
@@ -66,11 +83,7 @@ public class ListFragment extends Fragment {
     }
     // an attempt to move data from this fragment to home fragment
     public void setFav(View v, String ticker, String currency){
-        HomeFragment fragment = new HomeFragment();
-        Bundle intent = new Bundle();
-        intent.putSerializable("ticker",ticker);
-        intent.putSerializable("currency",currency);
-        fragment.setArguments(intent);
+        userRef.child("user").child(uid).child("Favorites").push().setValue(ticker);
 
     }
     @Override

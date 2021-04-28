@@ -48,7 +48,7 @@ public class LoginFragment extends Fragment {
 
         Button signinBT = view.findViewById(R.id.signInButton);
         Button newuser = view.findViewById(R.id.newUserButton);
-       // onStart();
+       onStart();
 
         signinBT.setOnClickListener(v -> {
             signin(view);
